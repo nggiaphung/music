@@ -109,15 +109,16 @@
     background-color: var(--primary-color);
   }
   
-  .progress {
+  .progress, .progress-volume {
     width: 100%;
-    -webkit-appearance: none;
-    height: 6px;
     background: #d3d3d3;
     outline: none;
     opacity: 0.7;
     -webkit-transition: 0.2s;
     transition: opacity 0.2s;
+  }
+  .progress {
+    -webkit-appearance: none;
   }
   
   .progress::-webkit-slider-thumb {
@@ -127,6 +128,11 @@
     height: 6px;
     background-color: var(--primary-color);
     cursor: pointer;
+  }
+
+  .crtl-volume{
+    display: flex;
+    justify-self: center;
   }
   
   /* PLAYLIST */

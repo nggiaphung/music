@@ -16,14 +16,19 @@ const nextBtn = $('.btn-next')
 const randomBtn = $('.btn-random')
 const repeatBtn = $('.btn-repeat')
 const playlist = $('.playlist')
+const volume = $('#volume')
 
 const app = {
     currentIndex: 0,
     isPlaying: false,
-    isRandom: false,
-    isRepeat: false,
-    config: JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
+
     songs: [
+                {
+                    name: 'LIMBO',
+                    singer: 'keshi',
+                    path: './assets/music/song9.mp3',
+                    image: './assets/img/img9.png',
+                },
                 {
                     name: 'DON\'T COI',
                     singer: 'RPT Orijinn',
@@ -72,11 +77,9 @@ const app = {
                     path: './assets/music/song8.mp3',
                     image: './assets/img/img8.png',
                 },
+    
             ],
-    setConfig: function(key,value){
-        this.config[key] = value;
-        localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(this.config))
-    },
+
     render: function(){
         const htmls = this.songs.map((song,index) => {
             return `
@@ -105,6 +108,7 @@ const app = {
     },
 
     handleEvenst: function(){
+        audio.volume = 0.0
         const cdWidth = cd.offsetWidth
 
         // Xử lý CD quay / dừng
@@ -155,6 +159,12 @@ const app = {
                 progress.value = progressPercent
             }
         }
+
+        // Khi âm lượng bài hát thay đổi
+        volume.addEventListener("input", function() {
+            audio.volume = volume.value;
+        });
+
 
         // Xử lý khi tua song
         progress.onchange = function(e){
@@ -245,11 +255,6 @@ const app = {
         audio.src = this.currentSong.path
     },
 
-    loadConfig: function(){
-        this.isRandom = this.config.isRandom
-        this.isRepeat = this.config.isRepeat
-    },
-
     prevSong: function(){
         this.currentIndex--
         if(this.currentIndex < 0){
@@ -277,8 +282,6 @@ const app = {
     },
     
     start: function(){
-        // Gán cấu hình từ config vào Object
-        this.loadConfig()
 
         // Định nghĩa các thuộc tính cho object
         this.defineProperties()
@@ -291,10 +294,6 @@ const app = {
 
         //Render playlist
         this.render()
-
-        // Hiện thị trạng thái ban đầu của Button Repeat & Random
-        randomBtn.classList.toggle('active', app.isRandom)
-        repeatBtn.classList.toggle('active', app.isRepeat)
     }
 }
 
