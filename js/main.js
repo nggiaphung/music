@@ -21,6 +21,8 @@ const volume = $('#volume')
 const app = {
     currentIndex: 0,
     isPlaying: false,
+    isRandom: false,
+    isRepeat: false,
 
     songs: [
                 {
@@ -198,14 +200,12 @@ const app = {
         // Xử lý khi bật/tắt random song
         randomBtn.onclick = function(e){
             app.isRandom = !app.isRandom
-            app.setConfig('isRandom',app.isRandom)
             randomBtn.classList.toggle('active', app.isRandom)
         }
         
         // Xử lý lặp lại 1 song
         repeatBtn.onclick =  function(e){
             app.isRepeat = !app.isRepeat
-            app.setConfig('isRepeat',app.isRepeat)
             repeatBtn.classList.toggle('active', app.isRepeat)
         }
 
